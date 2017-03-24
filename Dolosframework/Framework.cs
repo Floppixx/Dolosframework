@@ -49,44 +49,40 @@ namespace Dolosframework
         {
             var x = Memory.Read<IntPtr>(EngineDll.BaseAddress + Offsets.signatures.dwClientState, false);
             var f = Memory.Read<int>(x + 0x100, false);
+            if (f != 6) return;
 
+            LocalPlayer.Update();
+            Entities.Update();
+            Crosshair.Update();
+            // TODO!! Make better aimbot
+            //foreach (var enemies in Entities.Entities)
+            //foreach (var player in LocalPlayer.Localplayer)
+            //{
+            //    //Console.WriteLine(player.CurrentWeapon);
+            //    if (enemies.Health <= 1) continue;
+            //    var currentViewAngle = player.ViewAngles;
+            //    var localHeadPos = player.LocalEyePosition;
+            //    var enemyHeadPos = enemies.BonePosition(8);
 
-            if (f == 6)
-            {
-                LocalPlayer.Update();
-                Entities.Update();
-                Crosshair.Update();
-                // TODO!! Make better aimbot
-                //foreach (var enemies in Entities.Entities)
-                //foreach (var player in LocalPlayer.Localplayer)
-                //{
-                //    //Console.WriteLine(player.CurrentWeapon);
-                //    if (enemies.Health <= 1) continue;
-                //    var currentViewAngle = player.ViewAngles;
-                //    var localHeadPos = player.LocalEyePosition;
-                //    var enemyHeadPos = enemies.BonePosition(8);
-
-                //    var calculatedAngle = localHeadPos.CalcAngle(enemyHeadPos);
-                //    var clampedAngle = calculatedAngle.ClampAngle();
-                //    var Fov =
-                //        System.Math.Sqrt(System.Math.Pow(clampedAngle.X - currentViewAngle.X, 2) +
-                //                         System.Math.Pow(clampedAngle.Y - currentViewAngle.Y, 2));
-                //    var IsDown = (Vector3.GetKeyState(0x01) & 0xFF00) != 0;
-                //    if (!(Fov < 2)) continue;
-                //        if (IsDown)
-                //        {
+            //    var calculatedAngle = localHeadPos.CalcAngle(enemyHeadPos);
+            //    var clampedAngle = calculatedAngle.ClampAngle();
+            //    var Fov =
+            //        System.Math.Sqrt(System.Math.Pow(clampedAngle.X - currentViewAngle.X, 2) +
+            //                         System.Math.Pow(clampedAngle.Y - currentViewAngle.Y, 2));
+            //    var IsDown = (Vector3.GetKeyState(0x01) & 0xFF00) != 0;
+            //    if (!(Fov < 2)) continue;
+            //        if (IsDown)
+            //        {
 
 
 
-                //        }
-                //    }
+            //        }
+            //    }
 
 
-                //Bunnyhop.Activated();
-                //TriggerBot.Activated();
-                Bspotted.Activated();
-
-            }
+            //Bunnyhop.Activated();
+            //TriggerBot.Activated();
+            Bspotted.Activated();
         }
     }
 }

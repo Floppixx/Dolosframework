@@ -7,7 +7,7 @@ namespace Dolosframework.Hacks
     {
         public static void Activated()
         {
-            Framework.Entities.Entities.ForEach((enemy) => enemy.SetSpotted(1));
+            Framework.Entities.Entities.ForEach(enemy => enemy.SetSpotted(1));
         }
     }
 }

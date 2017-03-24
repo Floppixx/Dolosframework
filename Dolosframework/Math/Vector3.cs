@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Dolosframework.Math
@@ -55,9 +56,9 @@ namespace Dolosframework.Math
         /// <param name="z"></param>
         public Vector3(float x, float y, float z)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace Dolosframework.Math
         /// Initializes a new Vector3 using the given float-array
         /// </summary>
         /// <param name="values"></param>
-        public Vector3(float[] values) : this(values[0], values[1], values[2]) { }
+        public Vector3(IReadOnlyList<float> values) : this(values[0], values[1], values[2]) { }
 
         #endregion CONSTRUCTOR
 
@@ -94,13 +95,13 @@ namespace Dolosframework.Math
 
         public override bool Equals(object obj)
         {
-            Vector3 vec = (Vector3)obj;
-            return this.GetHashCode() == vec.GetHashCode();
+            var vec = (Vector3)obj;
+            return GetHashCode() == vec.GetHashCode();
         }
 
-        public override int GetHashCode() => this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.Z.GetHashCode();
+        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
 
-        public override string ToString() => string.Format("[X={0}, Y={1}, Z={2}]", this.X.ToString(), this.Y.ToString(), this.Z.ToString());
+        public override string ToString() => $"[X={X}, Y={Y}, Z={Z}]";
 
         #endregion METHODS
 
@@ -123,13 +124,13 @@ namespace Dolosframework.Math
                 switch (i)
                 {
                     case 0:
-                        return this.X;
+                        return X;
 
                     case 1:
-                        return this.Y;
+                        return Y;
 
                     case 2:
-                        return this.Z;
+                        return Z;
 
                     default:
                         throw new IndexOutOfRangeException();
@@ -140,15 +141,15 @@ namespace Dolosframework.Math
                 switch (i)
                 {
                     case 0:
-                        this.X = value;
+                        X = value;
                         break;
 
                     case 1:
-                        this.Y = value;
+                        Y = value;
                         break;
 
                     case 2:
-                        this.Z = value;
+                        Z = value;
                         break;
 
                     default:

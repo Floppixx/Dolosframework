@@ -7,8 +7,8 @@
     {
         #region VARIABLES
 
-        private static float DEG_2_RAD = (float)(System.Math.PI / 180f);
-        private static float RAD_2_DEG = (float)(180f / System.Math.PI);
+        private const float DEG_2_RAD = (float) (System.Math.PI / 180f);
+        private const float RAD_2_DEG = (float) (180f / System.Math.PI);
 
         #endregion VARIABLES
 
@@ -23,8 +23,8 @@
         /// <returns>Array of translated screen-coodinates</returns>
         public static Vector2[] WorldToScreen(this Matrix viewMatrix, Vector2 screenSize, params Vector3[] points)
         {
-            Vector2[] worlds = new Vector2[points.Length];
-            for (int i = 0; i < worlds.Length; i++)
+            var worlds = new Vector2[points.Length];
+            for (var i = 0; i < worlds.Length; i++)
                 worlds[i] = viewMatrix.WorldToScreen(screenSize, points[i]);
             return worlds;
         }
@@ -38,24 +38,23 @@
         /// <returns>Translated screen-coodinate</returns>
         public static Vector2 WorldToScreen(this Matrix viewMatrix, Vector2 screenSize, Vector3 point3D)
         {
-            Vector2 returnVector = Vector2.Zero;
-            float w = viewMatrix[3, 0] * point3D.X + viewMatrix[3, 1] * point3D.Y + viewMatrix[3, 2] * point3D.Z + viewMatrix[3, 3];
-            if (w >= 0.01f)
-            {
-                float inverseX = 1f / w;
-                returnVector.X =
-                    (screenSize.X / 2f) +
-                    (0.5f * (
-                    (viewMatrix[0, 0] * point3D.X + viewMatrix[0, 1] * point3D.Y + viewMatrix[0, 2] * point3D.Z + viewMatrix[0, 3])
-                    * inverseX)
-                    * screenSize.X + 0.5f);
-                returnVector.Y =
-                    (screenSize.Y / 2f) -
-                    (0.5f * (
-                    (viewMatrix[1, 0] * point3D.X + viewMatrix[1, 1] * point3D.Y + viewMatrix[1, 2] * point3D.Z + viewMatrix[1, 3])
-                    * inverseX)
-                    * screenSize.Y + 0.5f);
-            }
+            var returnVector = Vector2.Zero;
+            var w = viewMatrix[3, 0] * point3D.X + viewMatrix[3, 1] * point3D.Y + viewMatrix[3, 2] * point3D.Z + viewMatrix[3, 3];
+            if (!(w >= 0.01f)) return returnVector;
+
+            var inverseX = 1f / w;
+            returnVector.X =
+                (screenSize.X / 2f) +
+                (0.5f * (
+                     (viewMatrix[0, 0] * point3D.X + viewMatrix[0, 1] * point3D.Y + viewMatrix[0, 2] * point3D.Z + viewMatrix[0, 3])
+                     * inverseX)
+                 * screenSize.X + 0.5f);
+            returnVector.Y =
+                (screenSize.Y / 2f) -
+                (0.5f * (
+                     (viewMatrix[1, 0] * point3D.X + viewMatrix[1, 1] * point3D.Y + viewMatrix[1, 2] * point3D.Z + viewMatrix[1, 3])
+                     * inverseX)
+                 * screenSize.Y + 0.5f);
             return returnVector;
         }
 

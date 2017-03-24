@@ -9,8 +9,8 @@ namespace Dolosframework.Math
     {
         #region VARIABLES
 
-        private float[] data;
-        private int rows, columns;
+        private readonly float[] _data;
+        private readonly int _columns, _rows;
 
         #endregion VARIABLES
 
@@ -18,9 +18,9 @@ namespace Dolosframework.Math
 
         public Matrix(int rows, int columns)
         {
-            this.rows = rows;
-            this.columns = columns;
-            this.data = new float[rows * columns];
+            _rows = rows;
+            _columns = columns;
+            _data = new float[rows * columns];
         }
 
         #endregion CONSTRUCTOR
@@ -29,17 +29,17 @@ namespace Dolosframework.Math
 
         public void Read(byte[] data)
         {
-            for (int y = 0; y < rows; y++)
-                for (int x = 0; x < columns; x++)
-                    this[y, x] = BitConverter.ToSingle(data, sizeof(float) * ((y * columns) + x));
+            for (var y = 0; y < _rows; y++)
+                for (var x = 0; x < _columns; x++)
+                    this[y, x] = BitConverter.ToSingle(data, sizeof(float) * (y * _columns + x));
         }
 
         public byte[] ToByteArray()
         {
-            int sof = sizeof(float);
-            byte[] data = new byte[this.data.Length * sof];
-            for (int i = 0; i < this.data.Length; i++)
-                Array.Copy(BitConverter.GetBytes(this.data[i]), 0, data, i * sof, sof);
+            const int sof = sizeof(float);
+            var data = new byte[_data.Length * sof];
+            for (var i = 0; i < _data.Length; i++)
+                Array.Copy(BitConverter.GetBytes(_data[i]), 0, data, i * sof, sof);
             return data;
         }
 
@@ -49,14 +49,14 @@ namespace Dolosframework.Math
 
         public float this[int i]
         {
-            get { return data[i]; }
-            set { data[i] = value; }
+            get { return _data[i]; }
+            set { _data[i] = value; }
         }
 
         public float this[int row, int column]
         {
-            get { return data[row * columns + column]; }
-            set { data[row * columns + column] = value; }
+            get { return _data[row * _columns + column]; }
+            set { _data[row * _columns + column] = value; }
         }
 
         #endregion OPERANDS
